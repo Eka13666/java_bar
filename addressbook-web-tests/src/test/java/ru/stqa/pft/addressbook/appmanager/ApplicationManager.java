@@ -7,7 +7,6 @@ import java.util.concurrent.TimeUnit;
 public class ApplicationManager {
   FirefoxDriver wd;
 
-
   private NavigationHelper navigationHelper;
   private GroupHelper groupHelper;
   private SessionHelper sessionHelper;
@@ -25,7 +24,6 @@ public class ApplicationManager {
   public void logout() {
     wd.findElement(By.linkText("Logout")).click();
   }
-
 
   public void stop() {
     logout();
