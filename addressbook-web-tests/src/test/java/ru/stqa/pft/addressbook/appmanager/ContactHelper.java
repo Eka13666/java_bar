@@ -18,7 +18,7 @@ public class ContactHelper extends HelperBase {
     click(By.linkText("Logout"));
   }
 
-  public void returnToHomepage() {
+  public void goToHomepage() {
     click(By.linkText("home page"));
   }
 
@@ -36,4 +36,24 @@ public class ContactHelper extends HelperBase {
     type(By.name("email"), contactData.email());
   }
 
+  public void selectContact() {
+    click(By.name("selected[]"));
+  }
+
+  public void initContactModification() {
+    click(By.xpath("//img[@alt='Edit']"));
+  }
+
+  public void submitContactModification() {
+    click(By.xpath("//input[22]"));
+  }
+
+  public void deleteSelectedContacts() {
+    click(By.xpath("//input[@value='Delete']"));
+
+  }
+
+  public void closeAlert() {
+    wd.switchTo().alert().accept();
+  }
 }

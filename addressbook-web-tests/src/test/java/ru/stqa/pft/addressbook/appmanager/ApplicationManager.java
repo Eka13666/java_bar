@@ -25,7 +25,11 @@ public class ApplicationManager {
   }
 
   public void logout() {
-    wd.findElement(By.linkText("Logout")).click();
+    try {
+      wd.findElement(By.linkText("Logout")).click();
+    } catch (Exception e) {
+      System.out.println("Не удалось выйти");
+    }
   }
 
   public void stop() {
