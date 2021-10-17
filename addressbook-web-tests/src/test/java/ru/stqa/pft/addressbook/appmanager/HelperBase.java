@@ -24,7 +24,7 @@ public class HelperBase {
     }
   }
 
-  public boolean isAlertPresent () {
+  public boolean isAlertPresent() {
     try {
       wd.switchTo().alert();
       return  true;

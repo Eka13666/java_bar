@@ -29,4 +29,7 @@ public class NavigationHelper extends HelperBase {
     click(By.linkText("add new"));
   }
 
+  public boolean isThereAContact() {
+    return isElementPresent(By.name("selected[]"));
+  }
 }

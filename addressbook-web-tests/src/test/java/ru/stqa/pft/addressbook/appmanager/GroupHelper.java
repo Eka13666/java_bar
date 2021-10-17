@@ -20,7 +20,7 @@ public class GroupHelper extends HelperBase {
     click(By.name("submit"));
   }
 
-  public void fillGroupForm(GroupData groupData, boolean creation) {
+  public void fillGroupForm(GroupData groupData) {
     type(By.name("group_name"), groupData.name());
     type(By.name("group_header"), groupData.header());
     type(By.name("group_footer"), groupData.footer());
@@ -48,7 +48,7 @@ public class GroupHelper extends HelperBase {
 
   public void createGroup(GroupData group) {
     initGroupCreation();
-    fillGroupForm(group, true);
+    fillGroupForm(group);
     submitGroupCreation();
     returnToGroupPage();
   }
