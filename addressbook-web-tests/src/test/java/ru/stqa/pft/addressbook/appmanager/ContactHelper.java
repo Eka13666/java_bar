@@ -68,4 +68,9 @@ public class ContactHelper extends HelperBase {
     goToHomepage();
   }
 
+  //?? Не работает отсюда для тестов, но работает если юзать через NavigationHelper
+  public boolean isThereAContact() {
+    return isElementPresent(By.name("selected[]"));
+  }
+
 }
