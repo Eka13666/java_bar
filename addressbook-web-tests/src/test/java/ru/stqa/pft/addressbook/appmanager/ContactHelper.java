@@ -2,10 +2,10 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.Select;
-import org.testng.Assert;
+import org.openqa.selenium.WebElement;
 import ru.stqa.pft.addressbook.model.ContactData;
-import ru.stqa.pft.addressbook.model.GroupData;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactHelper extends HelperBase {
 
@@ -22,7 +22,7 @@ public class ContactHelper extends HelperBase {
   }
 
   public void goToHomepage() {
-    click(By.linkText("home page"));
+    click(By.linkText("home"));
   }
 
   public void submitContactCreation() {
@@ -30,18 +30,17 @@ public class ContactHelper extends HelperBase {
   }
 
   public void fillContactsForm(ContactData contactData) {
-    type(By.name("firstname"), contactData.firstName());
-    type(By.name("middlename"), contactData.middleName());
-    type(By.name("lastname"), contactData.lastName());
-    type(By.name("company"), contactData.companyName());
-    type(By.name("address"), contactData.address());
-    type(By.name("mobile"), contactData.mobilePhone());
-    type(By.name("email"), contactData.email());
+    type(By.name("firstname"), contactData.getFirstName());
+    type(By.name("middlename"), contactData.getMiddleName());
+    type(By.name("lastname"), contactData.getLastName());
+    type(By.name("address"), contactData.getAddress());
+    type(By.name("mobile"), contactData.getMobilePhone());
+    type(By.name("email"), contactData.getEmail());
 
   }
 
-  public void selectContact () {
-    click(By.name("selected[]"));
+  public void selectContact (int index) {
+    wd.findElements(By.name("selected[]")).get(index).click();
   }
 
   public void initContactModification () {
@@ -67,10 +66,25 @@ public class ContactHelper extends HelperBase {
     submitContactCreation();
     goToHomepage();
   }
-
-  //?? Не работает отсюда для тестов, но работает если юзать через NavigationHelper
   public boolean isThereAContact() {
-    return isElementPresent(By.name("selected[]"));
+    return isElementPresent(By.xpath("//td/input"));
   }
 
+  public int getContactCount() {
+    return wd.findElements(By.name("selected[]")).size();
+  }
+
+  public List<ContactData> getContactList() {
+    List<ContactData> contacts = new ArrayList<ContactData>();
+    List<WebElement> elements = wd.findElements(By.name("entry"));
+    for (WebElement element : elements) {
+      String firstName = "Oleg";
+      String lastName = "Ivanov";
+      int id = Integer.parseInt(element.findElement(By.xpath("./td/input")).getAttribute("value"));
+      ContactData contact = new ContactData(0, "Oleg", "Petrovich", "Ivanov", "Saint-Petersburg, Mayakovskaya street, 29, fl. 13", "79210000000", "test13@mail.ru");
+      contacts.add(contact);
+    }
+    return contacts;
+  }
 }
+
