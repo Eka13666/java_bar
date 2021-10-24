@@ -17,7 +17,7 @@ import java.util.Objects;
       return header;
     }
 
-    public String getFooter() {
+   public String getFooter() {
       return footer;
     }
 
@@ -44,18 +44,17 @@ import java.util.Objects;
      return this;
    }
 
-
    @Override
    public boolean equals(Object o) {
      if (this == o) return true;
      if (o == null || getClass() != o.getClass()) return false;
      GroupData groupData = (GroupData) o;
-     return Objects.equals(name, groupData.name);
+     return id == groupData.id && Objects.equals(name, groupData.name);
    }
 
    @Override
    public int hashCode() {
-     return Objects.hash(name);
+     return Objects.hash(id, name);
    }
 
    @Override
