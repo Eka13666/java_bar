@@ -1,21 +1,37 @@
 package ru.stqa.pft.addressbook.tests;
 
+import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.Contacts;
+import java.util.Comparator;
+import java.util.List;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
 
 public class ContactModificationTests extends TestBase {
+
+  @BeforeMethod
+  public void ensurePreconditions() {
+    app.goTo().gotoHomePage();
+    if (! app.goTo().isThereAContact()) {
+      app.contact().create(new ContactData().withFirstName("Oleg").withLastName("Ivanov"));
+    }
+  }
 
   @Test
 
   public void testContactModification() {
-    app.getNavigationHelper().gotoContactPage();
-    if (! app.getNavigationHelper().isThereAContact()) {
-      app.getContactHelper().createContact(new ContactData("Oleg", "Petrovich", "Ivanov", "Test13", "Saint-Petersburg, Mayakovskaya street, 29, fl. 13", "79210000000", "test13@mail.ru", null));
-    }
-    app.getContactHelper().selectContact();
-    app.getContactHelper().initContactModification();
-    app.getContactHelper().fillContactsForm(new ContactData("Oleg", "Petrovich", "Ivanov", "Test13", "Saint-Petersburg, Mayakovskaya street, 29, fl. 13", "79210000000", "test13@mail.ru", null));
-    app.getContactHelper().submitContactModification();
-    app.getContactHelper().goToHomepage();
+    Contacts before = app.contact().all();
+    ContactData modifiedContact = before.iterator().next();
+    ContactData contact = new ContactData().withId(modifiedContact.getId()).withFirstName("Oleg").withMiddleName("Petrovich").withLastName("Ivanov").withAddress("Saint-Petersburg, Mayakovskaya street, 29, fl. 13").withMobilePhone("79999099999").withEmail("test13@mail.ru");
+    Contacts after = app.contact().all();
+    assertEquals(after.size(), before.size());
+    assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
   }
+
+
 }
