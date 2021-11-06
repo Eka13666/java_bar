@@ -14,6 +14,10 @@ public class ContactData {
   public String workPhone;
   public String allPhones;
   public String email;
+  public String email2;
+  public String email3;
+  public String allEmails;
+
 
 
   public String getFirstName() {
@@ -52,12 +56,21 @@ public class ContactData {
     return email;
   }
 
-  public int getId() {
-    return id;
+  public String getEmail2() {
+    return email2;
   }
 
-  public void setId(int id) {
-    this.id = id;
+  public String getEmail3() {
+    return email3;
+  }
+
+
+  public String getAllEmails() {
+    return allEmails;
+  }
+
+  public int getId() {
+    return id;
   }
 
   public ContactData withId(int id) {
@@ -110,6 +123,23 @@ public class ContactData {
     this.email = email;
     return this;
   }
+
+  public ContactData withEmail2(String email2) {
+    this.email2 = email2;
+    return this;
+  }
+
+  public ContactData withEmail3(String email3) {
+    this.email3 = email3;
+    return this;
+  }
+
+  public ContactData withAllEmails(String allEmails) {
+    this.allEmails = allEmails;
+    return this;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
