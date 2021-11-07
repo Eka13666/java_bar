@@ -1,9 +1,19 @@
 package ru.stqa.pft.addressbook.tests;
 
+import com.thoughtworks.xstream.XStream;
 import org.testng.annotations.*;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.testng.Assert.assertEquals;
@@ -11,21 +21,31 @@ import static org.testng.Assert.assertEquals;
 
 public class ContactCreationTests extends TestBase {
 
-  @Test
-  public void testContactCreation() {
+  @DataProvider
+  public Iterator<Object[]> validContactsFromXml() throws IOException {
+    BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.xml")));
+    String xml = "";
+    String line = reader.readLine();
+    while (line != null) {
+      xml += line;
+      line = reader.readLine();
+    }
+    XStream xStream = new XStream();
+    xStream.allowTypes(new Class[]{ ContactData.class });
+    xStream.processAnnotations(ContactData.class);
+    List<ContactData> contacts = (List<ContactData>) xStream.fromXML(xml);
+    return contacts.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
+  }
+
+  @Test(dataProvider = "validContactsFromXml")
+  public void testContactCreation(ContactData contact) {
     app.goTo().gotoHomePage();
     Contacts before = app.contact().all();
     File photo = new File("src/test/resources/photo.jpeg");
-    ContactData contact = new ContactData()
-            .withFirstName("Oleg").withMiddleName("Petrovich").withLastName("Ivanov")
-            .withAddress("Saint-Petersburg, Mayakovskaya street, 29, fl. 13").withMobilePhone("79999099999")
-            .withEmail("test13@mail.ru").withPhoto(photo);
     app.contact().create(contact);
-    app.goTo().gotoHomePage();
     Contacts after = app.contact().all();
     assertEquals(after.size(), before.size() + 1);
-    assertThat(after, equalTo(
-            before.withAdded(contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
+
  }
 }
 
