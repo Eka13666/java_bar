@@ -14,7 +14,7 @@ public class ContactAddressTests extends TestBase {
 
   @BeforeMethod
   public void ensurePreconditions() {
-    app.goTo().gotoHomePage();
+    app.goTo().HomePage();
     if (!app.goTo().isThereAContact()) {
       app.contact().create(new ContactData().withFirstName("Oleg").withLastName("Ivanov").withMobilePhone("79990999999")
               .withHomePhone("8123567543").withWorkPhone("6665666").withAddress("Saint-Petersburg, Mayakovskaya street, 29, fl. 13").withEmail("email"));
@@ -23,7 +23,7 @@ public class ContactAddressTests extends TestBase {
 
   @Test
   public void testContactAddress() {
-    app.goTo().gotoHomePage();
+    app.goTo().HomePage();
     ContactData contact = app.contact().all().iterator().next();
     ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
 
