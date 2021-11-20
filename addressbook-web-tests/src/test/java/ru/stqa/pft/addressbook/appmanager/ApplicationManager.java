@@ -27,7 +27,7 @@ public class ApplicationManager {
     properties = new Properties();
   }
 
-  public void init() throws IOException {
+  public void init() throws IOException, Exception {
     String target = System.getProperty("target", "local");
     properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
     if (browser.equals(BrowserType.FIREFOX)) {
@@ -36,6 +36,8 @@ public class ApplicationManager {
       wd = new ChromeDriver();
     } else if (browser.equals(BrowserType.IE)) {
       wd = new InternetExplorerDriver();
+    } else {
+      throw new Exception("Неожиданное значение переменной browser");
     }
     wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
     wd.get(properties.getProperty("web.baseUrl"));
