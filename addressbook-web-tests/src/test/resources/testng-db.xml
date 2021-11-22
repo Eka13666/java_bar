@@ -4,6 +4,7 @@
     <test name="Db">
         <classes>
             <class name="ru.stqa.pft.addressbook.tests.DbConnectionTest" />
+            <class name="ru.stqa.pft.addressbook.tests.HbConnectionTest" />
         </classes>
     </test>
 </suite>
