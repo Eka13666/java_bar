@@ -22,6 +22,9 @@ public class ContactHelper extends HelperBase {
   }
 
   public void goToHomepage() {
+    if (isElementPresent(By.id("maintable"))) {
+      return;
+    }
     click(By.linkText("home"));
   }
 
@@ -38,7 +41,7 @@ public class ContactHelper extends HelperBase {
     type(By.name("email"), contactData.getEmail());
     type(By.name("email2"), contactData.getEmail2());
     type(By.name("email3"), contactData.getEmail3());
-    attach(By.name("photo"), contactData.getPhoto());
+//    attach(By.name("photo"), contactData.getPhoto());
 
   }
 
@@ -101,7 +104,7 @@ public class ContactHelper extends HelperBase {
     return isElementPresent(By.xpath("//td/input"));
   }
 
-  public int getContactCount() {
+  public int count() {
     return wd.findElements(By.name("selected[]")).size();
   }
 
@@ -142,4 +145,5 @@ public class ContactHelper extends HelperBase {
             .withEmail2(email2).withEmail3(email3);
 
   }
+
 }

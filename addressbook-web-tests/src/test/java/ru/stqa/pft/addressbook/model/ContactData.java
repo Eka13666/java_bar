@@ -27,6 +27,36 @@ public class ContactData {
   @Column(name = "middlename")
   public String middleName;
 
+  @Override
+  public String toString() {
+    return "ContactData{" +
+            "id=" + id +
+            ", firstName='" + firstName + '\'' +
+            ", middleName='" + middleName + '\'' +
+            ", lastName='" + lastName + '\'' +
+            ", address='" + address + '\'' +
+            ", mobilePhone='" + mobilePhone + '\'' +
+            ", homePhone='" + homePhone + '\'' +
+            ", workPhone='" + workPhone + '\'' +
+            ", email='" + email + '\'' +
+            ", email2='" + email2 + '\'' +
+            ", email3='" + email3 + '\'' +
+            '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    ContactData that = (ContactData) o;
+    return id == that.id && Objects.equals(firstName, that.firstName) && Objects.equals(middleName, that.middleName) && Objects.equals(lastName, that.lastName) && Objects.equals(address, that.address) && Objects.equals(mobilePhone, that.mobilePhone) && Objects.equals(homePhone, that.homePhone) && Objects.equals(workPhone, that.workPhone) && Objects.equals(email, that.email) && Objects.equals(email2, that.email2) && Objects.equals(email3, that.email3);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, firstName, middleName, lastName, address, mobilePhone, homePhone, workPhone, email, email2, email3);
+  }
+
   @Expose
   @Column(name = "lastname")
   public String lastName;
@@ -72,10 +102,10 @@ public class ContactData {
   @Transient
   public String allEmails;
 
-  @Column(name = "photo")
-  @Type(type = "text")
-  private String photo;
-
+/*   @Expose
+   @Column(name = "photo")
+   @Type(type = "text")
+   private String photoPath;*/
 
 
   public String getFirstName() {
@@ -131,14 +161,18 @@ public class ContactData {
     return id;
   }
 
-  public File getPhoto() {
-    return new File (photo);
+/*  public File getPhoto() {
+    if (photoPath == null) {
+      return null;
+    } else {
+      File photo = new File(photoPath);
+      return photo;
+    }
   }
-
-  public ContactData withPhoto(File photo) {
-    this.photo = photo.getPath();
+  public ContactData withPhoto(String photoPath) {
+    this.photoPath = photoPath;
     return this;
-  }
+  }*/
 
   public ContactData withId(int id) {
     this.id = id;
@@ -206,28 +240,5 @@ public class ContactData {
     return this;
   }
 
-
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    ContactData that = (ContactData) o;
-    return id == that.id && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, firstName, lastName);
-  }
-
-  @Override
-  public String toString() {
-    return "ContactData{" +
-            "id=" + id +
-            ", firstName='" + firstName + '\'' +
-            ", lastName='" + lastName + '\'' +
-            '}';
-  }
 
 }
