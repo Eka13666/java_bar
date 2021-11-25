@@ -13,7 +13,7 @@ public class GroupHelper extends HelperBase {
     super(wd);
   }
 
-  public void returnToGroupPage() {
+  public void goToGroupPage() {
     click(By.linkText("groups"));
   }
 
@@ -52,7 +52,7 @@ public class GroupHelper extends HelperBase {
     fillGroupForm(group);
     submitGroupCreation();
     groupCache = null;
-    returnToGroupPage();
+    goToGroupPage();
   }
 
   public void modify(GroupData group) {
@@ -61,7 +61,7 @@ public class GroupHelper extends HelperBase {
     fillGroupForm(group);
     submitGroupModification();
     groupCache = null;
-    returnToGroupPage();
+    goToGroupPage();
   }
 
   public boolean isThereAGroup() {
@@ -92,6 +92,6 @@ public class GroupHelper extends HelperBase {
     selectGroupById(group.getId());
     deleteSelectedGroups();
     groupCache = null;
-    returnToGroupPage();
+    goToGroupPage();
   }
 }

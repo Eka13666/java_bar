@@ -5,6 +5,9 @@ import org.hamcrest.CoreMatchers;
 import org.testng.annotations.*;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -33,14 +36,22 @@ public class ContactCreationTests extends TestBase {
     xStream.allowTypes(new Class[]{ ContactData.class });
     xStream.processAnnotations(ContactData.class);
     List<ContactData> contacts = (List<ContactData>) xStream.fromXML(xml);
-    return contacts.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
+    return contacts.stream().map((c) -> new Object[] {c}).collect(Collectors.toList()).iterator();
+  }
+
+  @BeforeMethod
+  public void ensurePreconditions () {
+    if (app.db().groups().size() == 0) {
+      app.group().goToGroupPage();
+      app.group().create(new GroupData().withName("test1"));
+    }
   }
 
   @Test(dataProvider = "validContactsFromXml")
   public void testContactCreation(ContactData contact) {
-    app.goTo().HomePage();
-    Contacts before = app.db().contacts();
     File photo = new File("src/test/resources/photo.jpeg");
+    Groups groups = app.db().groups();
+    Contacts before = app.db().contacts();
     app.contact().create(contact);
     app.goTo().HomePage();
     Contacts after = app.db().contacts();

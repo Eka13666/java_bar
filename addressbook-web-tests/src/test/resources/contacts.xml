@@ -10,6 +10,7 @@
     <email>email 0</email>
     <email2>email2 0</email2>
     <email3>email3 0</email3>
+    <groups/>
   </contact>
   <contact>
     <firstName>firstname 1</firstName>
@@ -22,17 +23,6 @@
     <email>email 1</email>
     <email2>email2 1</email2>
     <email3>email3 1</email3>
-  </contact>
-  <contact>
-    <firstName>firstname 2</firstName>
-    <middleName>middlename 2</middleName>
-    <lastName>lastname 2</lastName>
-    <address>address 2</address>
-    <mobilePhone>mobilephone 2</mobilePhone>
-    <homePhone>homephone 2</homePhone>
-    <workPhone>workphone 2</workPhone>
-    <email>email 2</email>
-    <email2>email2 2</email2>
-    <email3>email3 2</email3>
+    <groups/>
   </contact>
 </list>
