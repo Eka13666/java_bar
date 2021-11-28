@@ -1,7 +1,6 @@
 package ru.stqa.pft.addressbook.tests;
 
 import com.thoughtworks.xstream.XStream;
-import org.hamcrest.CoreMatchers;
 import org.testng.annotations.*;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
@@ -16,9 +15,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.testng.Assert.assertEquals;
+
 
 
 public class ContactCreationTests extends TestBase {
@@ -51,9 +50,9 @@ public class ContactCreationTests extends TestBase {
   public void testContactCreation(ContactData contact) {
     File photo = new File("src/test/resources/photo.jpeg");
     Groups groups = app.db().groups();
-    Contacts before = app.db().contacts();
-    app.contact().create(contact);
     app.goTo().HomePage();
+    Contacts before = app.db().contacts();
+    app.contact().create(contact.inGroup(groups.iterator().next()));
     Contacts after = app.db().contacts();
     assertThat(app.contact().count(), equalTo(before.size() + 1));
     assertThat(after, equalTo(

@@ -25,6 +25,13 @@ public class NavigationHelper extends HelperBase {
     click(By.linkText("home"));
   }
 
+
+  public void homePageSelectedGroup() {
+    HomePage();
+    click(By.cssSelector("select[name='group']"));
+
+  }
+
   public void gotoContactPage() {
     click(By.linkText("add new"));
   }

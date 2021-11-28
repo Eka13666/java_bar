@@ -7,6 +7,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
+
 import java.util.List;
 
 public class ContactHelper extends HelperBase {
@@ -55,8 +58,51 @@ public class ContactHelper extends HelperBase {
     }
   }
 
+  private void confirmAdding() {
+    click(By.xpath("//input[@value='Add to']"));
+  }
+  private void confirmRemoving() {
+    click(By.name("remove"));
+  }
+
+  public void addToGroup(ContactData contact, GroupData group) {
+    selectContactById(contact.getId());
+    selectGroupById(group.getId());
+    confirmAdding();
+    goToHomePage();
+  }
+
+  public Groups findGroupForAdding(ContactData contact, Groups groups) {
+    Groups groupsInContact = contact.getGroups();
+    groups.removeAll(groupsInContact);
+    return groups;
+  }
+
+  private void goToHomePage() {
+    click(By.linkText("home"));
+  }
+
+  public void addInGroup(ContactData contact, GroupData group) {
+    selectContactById(contact.getId());
+    new Select(wd.findElement(By.name("to_group"))).selectByValue(String.valueOf(group.getId()));
+    click(By.xpath("(//input[@name='add'])"));
+  }
+
+  public void removeInGroup(ContactData contact, GroupData group) {
+    selectContactById(contact.getId());
+    click(By.xpath("(//input[@name='remove'])"));
+  }
+
+  public void selectGroupList(GroupData group) {
+    new Select(wd.findElement(By.name("group"))).selectByValue(String.valueOf(group.getId()));;
+  }
+
   public void selectContactById(int id) {
-    wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
+    wd.findElement(By.cssSelector(String.format("input[value='%s']", id))).click();
+  }
+
+  public void selectGroupById(int id) {
+    click(By.cssSelector("select[name=\"to_group\"] > option[value='" + id + "']"));
   }
 
   public void submitContactModification() {
@@ -96,7 +142,7 @@ public class ContactHelper extends HelperBase {
   public void modify(ContactData contact) {
     selectContactById(contact.getId());
     initContactModificationById(contact.getId());
-    fillContactsForm(contact, false);
+    fillContactsForm(contact, true);
     submitContactModification();
     contactCache = null;
     goToHomepage();

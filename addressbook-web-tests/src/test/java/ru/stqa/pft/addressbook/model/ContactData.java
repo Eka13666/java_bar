@@ -221,6 +221,11 @@ public class ContactData {
     return this;
   }
 
+  private Object readResolve() {
+    groups = new HashSet<>();
+    return this;
+  }
+
   @Override
   public String toString() {
     return "ContactData{" +
