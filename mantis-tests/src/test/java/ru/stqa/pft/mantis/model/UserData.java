@@ -63,6 +63,7 @@ import javax.persistence.Table;
               "id=" + id +
               ", login='" + login + '\'' +
               ", email='" + email + '\'' +
+              ", password='" + password + '\'' +
               '}';
     }
   }

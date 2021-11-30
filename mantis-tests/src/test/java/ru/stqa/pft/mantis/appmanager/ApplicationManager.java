@@ -1,6 +1,5 @@
 package ru.stqa.pft.mantis.appmanager;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -21,9 +20,10 @@ public class ApplicationManager {
   private FtpHelper ftp;
   private MailHelper mailHelper;
   private JamesHelper jamesHelper;
-  private DbHelper dbHelper;
-
-
+  private DbHelper db;
+  private NavigationHelper goTo;
+  private UserHelper user;
+  private LoginHelper login;
 
 
 
@@ -34,7 +34,7 @@ public class ApplicationManager {
 
   public void init() throws IOException {
     String target = System.getProperty("target", "local");
-    properties.load(new FileReader(new File(format("src/test/resources/%s.properties", target))));
+    properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
   }
 
   public void stop() {
@@ -70,11 +70,12 @@ public class ApplicationManager {
       if (browser.equals(BrowserType.FIREFOX)) {
         wd = new FirefoxDriver();
       } else if (browser.equals(BrowserType.CHROME)) {
+        System.setProperty("webdriver.chrome.driver", properties.getProperty("chromedriverPath"));
         wd = new ChromeDriver();
       } else if (browser.equals(BrowserType.EDGE)) {
         wd = new EdgeDriver();
       }
-      wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+      wd.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
       wd.get(properties.getProperty("web.baseUrl"));
     }
       return wd;
@@ -95,12 +96,32 @@ public class ApplicationManager {
   }
 
   public DbHelper db() {
-    if (dbHelper == null) {
-      dbHelper = new DbHelper(this);
+    if (db == null) {
+      db = new DbHelper(this);
     }
-    return dbHelper;
+    return db;
   }
 
+  public NavigationHelper goTo() {
+    if (goTo == null) {
+      goTo = new NavigationHelper(this);
+    }
+    return goTo;
+  }
+
+  public UserHelper user() {
+    if (user == null) {
+      user = new UserHelper(this);
+    }
+    return user;
+  }
+
+  public LoginHelper login() {
+    if (login == null) {
+      login = new LoginHelper(this);
+    }
+    return login;
+  }
 
 }
 
