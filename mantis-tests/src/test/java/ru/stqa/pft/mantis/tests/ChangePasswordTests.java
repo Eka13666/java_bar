@@ -1,21 +1,25 @@
 package ru.stqa.pft.mantis.tests;
 
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.lanwen.verbalregex.VerbalExpression;
 import ru.stqa.pft.mantis.model.MailMessage;
 import ru.stqa.pft.mantis.model.UserData;
-
 import javax.mail.MessagingException;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static ru.stqa.pft.mantis.tests.TestBase.app;
-
 public class ChangePasswordTests extends TestBase {
 
+  @BeforeMethod
+  public void startMailServer() {
+    app.mail().start();
+  }
+
+
   @Test
-  public void passwordResetTest() throws MessagingException, IOException {
+  public void testPasswordChange() throws MessagingException, IOException, InterruptedException {
     app.registration().login(new UserData().withLogin("administrator").withPassword("root"));
     UserData user = app.db().users()
             .stream().filter((u) -> (!u.getLogin().equals("administrator")))
