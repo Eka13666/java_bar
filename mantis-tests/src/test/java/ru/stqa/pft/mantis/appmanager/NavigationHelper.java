@@ -12,7 +12,7 @@ public class NavigationHelper extends HelperBase {
     if (isElementPresent(By.linkText("Manage Accounts"))) {
       return;
     }
-    click(By.xpath("//span[contains(text(),'Manage')]/.."));
-    click(By.linkText("Manage Users"));
+    click(By.xpath("//span[contains(text(),'Управление')]/.."));
+    click(By.linkText("Управление пользователями"));
   }
 }

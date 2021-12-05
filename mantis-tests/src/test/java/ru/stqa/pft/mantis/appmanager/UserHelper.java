@@ -10,6 +10,6 @@ public class UserHelper extends HelperBase {
 
   public void resetPassword(int id) {
     wd.findElement(By.cssSelector(String.format("a[href = 'manage_user_edit_page.php?user_id=%s']", id))).click();
-    wd.findElement(By.cssSelector("input[value='Reset Password']")).click();
+    wd.findElement(By.cssSelector("input[value='Сбросить пароль']")).click();
   }
 }

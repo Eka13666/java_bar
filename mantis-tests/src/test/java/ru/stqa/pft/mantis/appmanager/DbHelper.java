@@ -24,7 +24,7 @@ public class DbHelper {
   public List<UserData> users() {
     Session session = sessionFactory.openSession();
     session.beginTransaction();
-    List<UserData> result = session.createQuery("from UsersData where username != 'administrator'").list();
+    List<UserData> result = session.createQuery("from UserData where username != 'administrator'").list();
     for (UserData user : result) {
       System.out.println(user);
     }
