@@ -7,4 +7,6 @@ $g_db_password = '';
 $g_signup_use_captcha = OFF;
 $g_phpMailer_method = PHPMAILER_METHOD_SMTP;
 $g_smtp_host = '127.0.0.1';
+$g_crypto_master_salt     = 'gnOeSu6H+ckEOgmj1wKEGm8pnwataREq10oMgHG+BfE=';
+
 
