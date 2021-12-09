@@ -49,6 +49,7 @@ public class ContactAddToGroupTest extends TestBase {
       allGroups = app.db().groups();
       contactsForAdding = allContacts;
       app.goTo().groupPage();
+    }
       ContactData addedContactToGroup = contactsForAdding.iterator().next();
       selectedGroup = app.contact().findGroupForAdding(addedContactToGroup, allGroups).iterator().next();
       app.contact().addInGroup(addedContactToGroup, selectedGroup);
@@ -63,4 +64,3 @@ public class ContactAddToGroupTest extends TestBase {
       }
     }
   }
-}
